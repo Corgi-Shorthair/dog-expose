@@ -1,0 +1,26 @@
+				<div class="panel" ng-show="panel.isSetTab(3)" ng-controller="CommentController as commentCtrl">
+					<h2> Comments </h2>
+					<blockquote ng-repeat="oneComment in commentCtrl.comments">
+        				{{oneComment.body}}
+        				<cite class="clearfix">—{{oneComment.author}}</cite>
+					</blockquote>
+					<!--  Review Form -->
+  					<form name="commentForm" role="form" ng-submit="commentCtrl.addComment(commentCtrl.comments,dog.product.name)">
+    					<!--  Live Preview -->
+    					<blockquote ng-show="commentCtrl.comment.body">
+      						{{commentCtrl.comment.body}}
+      						<cite class="clearfix">—{{commentCtrl.comment.author}}</cite>
+    					</blockquote>
+    					<!--  Form Field-->
+    					<h4>Submit a Comment</h4>
+    					<fieldset class="form-group">
+      						<textarea ng-model="commentCtrl.comment.body" class="form-control" placeholder="Write a short comment of the breed..." title="Comment"></textarea>
+    					</fieldset>
+    					<fieldset class="form-group">
+      						<input ng-model="commentCtrl.comment.author" type="email" class="form-control" placeholder="jimmyDean@sausage.com" title="Email" />
+    					</fieldset>
+    					<fieldset class="form-group">
+      						<input type="submit" class="btn btn-primary pull-right" value="Submit Comment" />
+    					</fieldset>
+  					</form>
+				</div>

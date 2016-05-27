@@ -1,0 +1,8 @@
+<div class="col-md-7" ng-controller="ImageController as imageCtrl">
+	<div class="thumbnail">
+		<img ng-src="{{imageCtrl.bigImageSource}}" class="img-responsive big-image" alt="{{dog.product.name}}" ng-click="NextImage()" />
+	</div>
+	<div class="center-block">
+		<img ng-repeat="imagesource in imageCtrl.images" ng-src="{{imagesource.source}}" class="smallpic" alt="{{dog.product.name}}" ng-click="ChangeImage(imagesource.source)" ng-class="{selectedBorder:imagesource.source==imageCtrl.bigImageSource}" />
+	</div>
+</div>

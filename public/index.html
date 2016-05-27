@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-GB" xml:lang="en-GB" ng-app="dogs">
+	<head>
+		<meta charset="UTF-8"/>
+		<title>Dog Expose</title>
+		<link href="lib/bootstrap-dist/css/bootstrap.css" rel="stylesheet" />
+		<link href="styles/style.css" rel="stylesheet" />
+	    <script src="lib/angular.min.js"></script>
+	  	<script src="lib/jquery.js"></script>
+	  	<script src="lib/bootstrap-dist/js/bootstrap.js"></script>
+	    <script src="angular/app.js"></script>
+		
+		<script src="/socket.io/socket.io.js"></script>
+	
+	</head>
+	<body>
+	  <header-bar></header-bar>
+
+	  <div class="container"> 
+		<!-- DogController: dog info for each kind -->
+		<div ng-controller="DogController as dog" class="row">
+		 
+		  <div ng-repeat="product in dog.products">
+		   
+		   <div class="thumbnail col-md-4 row-padding" ng-controller="UrlController as url" ng-class="{darker : dark}" ng-mouseenter="dark=true" ng-mouseleave="dark=false">
+		    <img  ng-src="{{product.source}}" class="img-responsive" alt="{{product.name}}" ng-click="ClickMeToRedirect(product.name)" />
+		    <div class="caption">
+			  <h3> {{product.name}} </h3>
+			  <p> {{product.description}} </p>
+			  <div>
+			  	<button class="btn btn-primary" type="button" ng-click="dog.sendLikes($index)">Like <span class="badge"> {{product.likes}} </span></button>
+			  	<button class="btn btn-info" type="button" ng-click="ClickMeToRedirect(product.name)">More </button>
+			  </div>
+		    </div>
+		   </div>
+		  
+		  </div>
+
+		</div>
+	  </div>
+
+	</body>
+</html>

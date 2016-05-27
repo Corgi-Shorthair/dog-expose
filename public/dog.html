@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-GB" xml:lang="en-GB" ng-app="dogs">
+	<head>
+		<meta charset="UTF-8"/>
+		<title>Dog Expose</title>
+		<link href="lib/bootstrap-dist/css/bootstrap.css" rel="stylesheet" />
+		<link href="styles/style.css" rel="stylesheet" />
+	    <script src="lib/angular.min.js"></script>
+	  	<script src="lib/jquery.js"></script>
+	  	<script src="lib/bootstrap-dist/js/bootstrap.js"></script>
+	    <script src="angular/app.js"></script>
+	
+		<script src="/socket.io/socket.io.js"></script>
+
+	</head>
+	<body>
+	  <header-bar></header-bar>
+	  
+	  <div class="container" ng-controller="IndividualDogController as dog"> 	
+		<image-gallery></image-gallery>	
+
+		<div class="col-md-5" ng-controller="PanelController as panel">
+			
+			<ul class="nav nav-pills">
+				<li ng-class="{active: panel.isSetTab(1)}"> 
+					<a href ng-click="panel.setTab(1)">Full Description</a>
+				</li>
+				<li ng-class="{active:panel.isSetTab(2)}"> 
+					<a href ng-click="panel.setTab(2)">Specifications</a>
+				</li>
+				<li ng-class="{active:panel.isSetTab(3)}"> 
+					<a href ng-click="panel.setTab(3)">Comment</a>
+				</li>
+			</ul>
+
+			<div class="panel" ng-show="panel.isSetTab(1)">
+				<h2> {{dog.product.name}} </h2>
+	  			<blockquote> {{dog.product.fullDescription}} </blockquote>
+			</div>
+			<div class="panel" ng-show="panel.isSetTab(2)">
+  				<h2>Specs</h2>
+				<blockquote><strong>Size</strong>: {{dog.product.size}}</blockquote>
+				<blockquote><strong>Coat</strong>: {{dog.product.coat}}</blockquote>
+				<blockquote><strong>Availability</strong>: {{dog.product.availability}}</blockquote>
+				<blockquote><strong>Talents</strong>: {{dog.product.talents}}</blockquote>
+				<blockquote><strong>Friendliness</strong>: {{dog.product.friendliness}}</blockquote>
+				<blockquote><strong>Noise</strong>: {{dog.product.noise}}</blockquote>
+			</div>
+			<comment-tab></comment-tab>
+
+		</div>
+	  </div>
+	  
+	</body>
+</html>
