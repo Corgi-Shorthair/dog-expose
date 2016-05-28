@@ -1,5 +1,5 @@
 (function(){
-	var app = angular.module("dogs", []);
+	var app = angular.module("dogs",['ngRoute','dogs-routes','dogs-directives']);
 
 	app.factory('socket', ['$rootScope', function($rootScope) {
   		var socket = io.connect();
@@ -70,21 +70,8 @@
 			return this.tab === checkTab;
 		};
 	});
-  	/*
-  	app.controller("CommentController", ['$http', function($http){
-    	this.comment = {};
-    	this.addComment = function(product){
-      		product.comments.push(this.comment);
-      		this.comment = {};
-      	};
-      	var dog = this;
-      	dog.comments = [];
-      	$http.get('/data/individualdog/comments').success(function(data){
-      		dog.comments = data;
-      	});
-    }]);
-	*/
-  	app.controller("CommentController", ['$http', function($http){
+  	
+  app.controller("CommentController", ['$http', function($http){
     	// store this instance and be used in $http service
       var current = this;
       current.comment = {};
@@ -107,13 +94,14 @@
       $http.get('/data/individualdog/comments').success(function(data){
           current.comments = data;
       });
-  	}]);
+  }]);
 	
 	app.controller("ImageController", [ '$http', '$scope', function($http, $scope){
 		var dog = this;
 		dog.images = [];
 		dog.bigImageSource=null;
 		$http.get('/data/individualdog/images').success(function(data){
+      console.log(data);
 			dog.images = data;
 			dog.bigImageSource = dog.images[0].source;
 		});
@@ -140,24 +128,5 @@
     	};
     }]);
 
-    app.directive("headerBar", function(){
-    	return {
-    		restrict: "E",
-    		templateUrl: "header-bar.html"
-    	};
-    });
-
-    app.directive("imageGallery", function(){
-    	return {
-    		restrict: "E",
-    		templateUrl: "image-gallery.html"
-    	};
-    });
-
-    app.directive("commentTab", function(){
-    	return {
-    		restrict :"E",
-    		templateUrl: "comment-tab.html"
-    	};
-    });
+    
 })();

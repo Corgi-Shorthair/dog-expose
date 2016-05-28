@@ -6,7 +6,7 @@ var bodyParser = require('body-parser');
 var parseUrlencoded = bodyParser.urlencoded({extended:false});
 var server = require('http').createServer(app);
 var io = require('socket.io')(server);
-var dogName = null;
+var dogName = 'Corgi';
 
 io.on('connection',function(socket){
 	console.log('one user connected.');
