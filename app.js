@@ -6,7 +6,6 @@ var bodyParser = require('body-parser');
 var parseUrlencoded = bodyParser.urlencoded({extended:false});
 var server = require('http').createServer(app);
 var io = require('socket.io')(server);
-var dogName = 'Corgi';
 
 io.on('connection',function(socket){
 	console.log('one user connected.');
@@ -21,8 +20,8 @@ io.on('connection',function(socket){
  });
 
 app.use(express.static('public'));
-
-app.param('dogname', function(req, res, next){
+/*
+app.param('breed', function(req, res, next){
 	var name = req.params.dogname;
 	var newName = name[0].toUpperCase() + name.slice(1).toLowerCase();
 	req.newDogName = newName;
@@ -40,6 +39,7 @@ app.get('/:dogname',function(req,res){
 		else res.sendFile(__dirname + '/public/dog.html'); 
 	});
 });
+*/
 
 //get all dog breeds' information
 app.get('/data/alldogs',function(req,res){
@@ -51,9 +51,12 @@ app.get('/data/alldogs',function(req,res){
 		res.json(results);
 	}); 
 });
+
 //get individual dog breed information
-app.get('/data/individualdog',function(req, res){
-	var result = null;
+app.get('/data/:breed',function(req, res){
+	var dogName = req.params.breed;
+	console.log(dogName);
+	var result = "place-holder";
 	var query = "SELECT name, fullDescription, size, coat, availability, talents, friendliness, noise FROM Dogs where name = ?";
 	db.each(query,dogName,function(err,row){
 		result = row;
@@ -62,7 +65,8 @@ app.get('/data/individualdog',function(req, res){
 	}); 
 });
 // get individual dog breed comments
-app.get('/data/individualdog/comments',function(req, res){
+app.get('/data/comments/:breed',function(req, res){
+	var dogName = req.params.breed;
 	var result = [];
 	var query = "SELECT author, body FROM Comments WHERE parentDog = ?";
 	db.each(query,dogName,function(err,row){
@@ -72,7 +76,9 @@ app.get('/data/individualdog/comments',function(req, res){
 	}); 
 });
 //get individual dog breed images
-app.get('/data/individualdog/images',function(req, res){
+app.get('/data/images/:breed',function(req, res){
+	var dogName = req.params.breed;
+	console.log(dogName);
 	var result = [];
 	var query = "SELECT source FROM ImgFiles WHERE parentDog = ?";
 	db.each(query,dogName,function(err,row){

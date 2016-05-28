@@ -10,9 +10,10 @@ angular.module('dogs-routes',[])
 				templateUrl : 'templates/home-template.html',
 			})
 
-			.when('/corgi',{
+			.when('/dog/:breed',{
 				templateUrl : 'templates/one-dog-template.html'
-			});
+			})
+			.otherwise({redirectTo: '/'});
 
 	});
 })();

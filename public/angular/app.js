@@ -49,13 +49,15 @@
 
 	}]);
 
-	app.controller("IndividualDogController", [ '$http', function($http){
+	app.controller("IndividualDogController", [ '$http', '$routeParams', '$scope',function($http, $routeParams, $scope){
 		var dog = this;
 		dog.product = {};
-		
-		$http.get('/data/individualdog').success(function(data){
+
+		var url = '/data/'+$routeParams.breed;
+		$http.get(url).success(function(data){
 			dog.product = data;
 		});
+
 	}]);
 
 	app.controller("PanelController",function(){
@@ -71,7 +73,7 @@
 		};
 	});
   	
-  app.controller("CommentController", ['$http', function($http){
+  app.controller("CommentController", ['$http', '$scope', '$routeParams', function($http,$scope,$routeParams){
     	// store this instance and be used in $http service
       var current = this;
       current.comment = {};
@@ -90,18 +92,18 @@
               current.comment = {};
           });
       	};
-      
-      $http.get('/data/individualdog/comments').success(function(data){
+      $http.get('/data/comments/'+ $routeParams.breed).success(function(data){
           current.comments = data;
-      });
+      }); 
   }]);
 	
-	app.controller("ImageController", [ '$http', '$scope', function($http, $scope){
+	app.controller("ImageController", [ '$http', '$scope','$routeParams', function($http, $scope, $routeParams){
 		var dog = this;
 		dog.images = [];
 		dog.bigImageSource=null;
-		$http.get('/data/individualdog/images').success(function(data){
-      console.log(data);
+
+		$http.get('/data/images/'+ $routeParams.breed).success(function(data){
+      		console.log(data);
 			dog.images = data;
 			dog.bigImageSource = dog.images[0].source;
 		});
@@ -115,14 +117,14 @@
 					break;
 				}
 			}
-		};
+		}; 
 	}]);
 
     app.controller("UrlController", ['$scope', '$log', '$window', function($scope, $log, $window){
     	$scope.ClickMeToRedirect = function(dogname){
-    		dogname = dogname.split(" ").join("-");
+    		//dogname = dogname.split(" ").join("-");
     		console.log(dogname);
-    		var url = "http://" + $window.location.host + "/" + dogname;
+    		var url = "#/dog/"+ encodeURIComponent(dogname);
     		$log.log(url);
     		$window.location.href = url;
     	};
